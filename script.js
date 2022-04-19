@@ -7,6 +7,7 @@ const decimalButton = document.querySelector(".decimal-button");
 const equalsButton = document.querySelector(".equals-button");
 const currentOperand = document.querySelector(".bottom-screen");
 const previousOperand = document.querySelector(".top-screen");
+const page = document.querySelector("body");
 
 currentOperand.textContent = "";
 previousOperand.textContent = "";
@@ -47,12 +48,25 @@ let firstEquationNumber = "";
 let clickedOperator = "";
 let result = "";
 
-// Display number clicked on calculator
 numberButton.forEach((number) => {
     number.addEventListener("click", function () {
         displayedNumber += number.value;
         currentOperand.textContent = displayedNumber;
     })
+})
+
+// Add keyboard support for numbers
+page.addEventListener("keypress", function(e) {
+    if (e.key >= 0 && e.key <= 9) {
+    displayedNumber += e.key;
+    currentOperand.textContent = displayedNumber;
+    } else return;
+    })
+
+// Add decimal button functionality
+decimalButton.addEventListener("click", function () {
+    displayedNumber += decimalButton.value;
+    currentOperand.textContent = displayedNumber;
 })
 
 // Update top screen of calculator when an operator is clicked
@@ -99,6 +113,7 @@ clearButton.addEventListener("click", function() {
     previousOperand.textContent = "";
 })
 
+// Delete a character from the calculator's display when delete button is clicked
 deleteButton.addEventListener("click", function() {
     let temp = "";
     temp = displayedNumber.slice(0, -1);
@@ -107,5 +122,5 @@ deleteButton.addEventListener("click", function() {
 })
 
 decimalButton.addEventListener("click", function () {
-    
+
 })
