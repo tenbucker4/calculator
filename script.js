@@ -34,19 +34,78 @@ function operate(operator, a, b) {
         return add(a, b);
     } else if (operator === "-") {
        return subtract(a, b);
-    } else if (operator === "*") {
+    } else if (operator === "x") {
        return multiply(a, b);
-    } else if (operator === "/") {
+    } else if (operator === "÷") {
        return divide(a, b);
     }
 }
 
 // Update calculator display when numbers are clicked
-let storedNumber = "";
+let displayedNumber = "";
+let firstEquationNumber = "";
+let clickedOperator = "";
+let result = "";
 
+// Display number clicked on calculator
 numberButton.forEach((number) => {
     number.addEventListener("click", function () {
-        storedNumber += number.value;
-        currentOperand.textContent = storedNumber;
+        displayedNumber += number.value;
+        currentOperand.textContent = displayedNumber;
     })
+})
+
+// Update top screen of calculator when an operator is clicked
+operatorButton.forEach((operator) => {
+    operator.addEventListener("click", function () {
+        if (firstEquationNumber && displayedNumber) {
+            calculateResult();
+        }
+        firstEquationNumber = displayedNumber;
+        clickedOperator = operator.textContent;
+        previousOperand.textContent = firstEquationNumber + clickedOperator;
+        displayedNumber = "";
+        currentOperand.textContent = "";
+    })
+})
+
+// Run calculation when equals key is clicked
+equalsButton.addEventListener("click", function () {
+    calculateResult();
+})
+
+function calculateResult() {
+    if (!firstEquationNumber || !displayedNumber) {
+        return;
+    }
+    if (clickedOperator === "÷" && displayedNumber === "0") {
+        currentOperand.textContent = "Nice Try ;)"
+        return;
+    }
+    result = parseFloat(operate(clickedOperator, parseFloat(firstEquationNumber), parseFloat(displayedNumber)).toFixed(4));
+    currentOperand.textContent = result;
+    previousOperand.textContent = firstEquationNumber + " " + clickedOperator + " " + displayedNumber;
+    displayedNumber = result;
+    firstEquationNumber = "";
+}
+
+// Clear data when AC is clicked
+clearButton.addEventListener("click", function() {
+    displayedNumber = "";
+    firstEquationNumber = "";
+    clickedOperator = "";
+    result = "";
+    currentOperand.textContent = "";
+    previousOperand.textContent = "";
+})
+
+deleteButton.addEventListener("click", function() {
+    let temp = "";
+    temp = displayedNumber.slice(0, -1);
+    displayedNumber = temp;
+    currentOperand.textContent = displayedNumber;
+})
+
+decimalButton.addEventListener("click", function () {
+    
 })

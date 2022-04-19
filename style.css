@@ -43,6 +43,8 @@ body {
     flex-direction: column;
     padding: 8px;
     justify-content: space-around;
+    word-wrap: break-word;
+    word-break: break-all;
 }
 
 .top-screen {
