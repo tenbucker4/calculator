@@ -55,14 +55,6 @@ numberButton.forEach((number) => {
     })
 })
 
-// Add keyboard support for numbers
-page.addEventListener("keypress", function(e) {
-    if (e.key >= 0 && e.key <= 9) {
-    displayedNumber += e.key;
-    currentOperand.textContent = displayedNumber;
-    } else return;
-    })
-
 // Add decimal button functionality
 decimalButton.addEventListener("click", function () {
     displayedNumber += decimalButton.value;
